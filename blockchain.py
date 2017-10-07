@@ -6,7 +6,7 @@ from time import time
 class Blockchain(object):
     def __init__(self):
         self.chain = []
-        self.current_transaction = []
+        self.current_transactions = []
 
         # Create the genesis block
         self.new_block(proof=100, previous_hash=1)
@@ -21,13 +21,13 @@ class Blockchain(object):
         block = {
             'index': len(self.chain) +1,
             'timestamp': time(),
-            'transaction': self.current_transaction,
+            'transaction': self.current_transactions,
             'proof': proof,
             'previous_hash': previous_hash or self.hash(self.chain[-1]),
         }
 
         # Reset the current list of transaction
-        self.current_transaction = []
+        self.current_transactions = []
 
         self.chain.append(block)
 
@@ -43,7 +43,7 @@ class Blockchain(object):
         :return: <int> Index of block gold this transaction
         """
 
-        self.current_transaction.append({
+        self.current_transactions.append({
             'sender': sender,
             'recipient': recipient,
             'amount': amount,
