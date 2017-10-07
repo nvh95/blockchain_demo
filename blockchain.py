@@ -66,3 +66,32 @@ class Blockchain(object):
         """Returns the last block in the chain"""
         return self.chain[-1]
 
+    def proof_of_work(self, last_proof):
+        """
+        Simple proof of work algorithm:
+        - Find a number p' satisfied valid_proof() function
+        - p is the previus proof, p' is the new proof
+
+        :param last_proof: <int>
+        :return: <int> new poof
+        """
+        proof = 0
+        while self.valid_proof(last_proof, proof) is False:
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def valid_proof(last_proof, proof):
+        """
+        Validate the proof if:
+        - hash(last_proof, proof) contains 4 leading zeroes
+
+        :param last_proof: <int> previous proof
+        :param proof: <int> current proof
+        :return: <bool> true or false
+        """
+
+        guess = f'{last_proof*proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == '0000'
