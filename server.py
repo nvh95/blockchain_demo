@@ -17,9 +17,11 @@ blockchain = Blockchain()
 def mine():
     return "We will mind a new Block"
 
-@app.route('/transaction/new', methods=['POST'])
+
+@app.route('/transactions/new', methods=['POST'])
 def new_transaction():
     return "Well will add a new transaction"
+
 
 @app.route('/chain', methods=['GET'])
 def full_chain():
